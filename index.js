@@ -14,6 +14,11 @@ app.get('/oi', function (req, res) {
 const lista = ['Rick Sanchez', 'Morty Smith', 'Summer Smith']
 //              0               1              2
 
+// Endpoint Read All -> [GET] /item
+app.get('/item', function (req, res) {
+  res.send(lista)
+})
+
 // Endpoint Read By ID -> [GET] /item/:id
 app.get('/item/:id', function (req, res) {
   // Acessamos o parâmetro de rota ID
@@ -25,6 +30,22 @@ app.get('/item/:id', function (req, res) {
 
   // Enviamos para a resposta o item acessado
   res.send(item)
+})
+
+// Especificamos que o corpo da requisição será em JSON
+app.use(express.json())
+
+// Endpoint Create -> [POST] /item
+app.post('/item', function (req, res) {
+  // Pegamos o item através do corpo da requisição
+  // No objeto JSON, pegamos a propriedade nome
+  const item = req.body.nome
+
+  // Adicionamos o item obtido na lista
+  lista.push(item)
+
+  // Exibimos uma mensagem de sucesso
+  res.send('Item adicionado com sucesso: ' + item)
 })
 
 app.listen(3000)
